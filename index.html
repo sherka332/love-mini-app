@@ -7,6 +7,7 @@
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+  
   <style>
     * {
       box-sizing: border-box;
@@ -75,6 +76,61 @@
       font-weight: bold;
     }
 
+    /* XOTIRA SANALARI */
+
+    .dates {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 25px;
+    }
+
+    .date-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 18px;
+      margin-bottom: 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s;
+    }
+
+    .date-card:active {
+      transform: scale(0.96);
+    }
+
+    .date-icon {
+      font-size: 35px;
+    }
+
+    .date-title {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+
+    .date-value {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .date-message {
+      display: none;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
+      line-height: 1.6;
+      animation: appear 0.5s ease;
+    }
+
     button {
       border: none;
       padding: 15px 30px;
@@ -112,7 +168,7 @@
         opacity: 1;
         transform: translateY(0);
       }
-    }
+        }
 
     .small-heart {
       position: fixed;
@@ -152,7 +208,6 @@
   <div class="subtitle">
     Bu sahifa faqat sen uchun...
   </div>
-
   <div class="counter">
     <div class="counter-title">
       19-avgust 2025-yildan beri ❤️
@@ -163,8 +218,32 @@
     </div>
   </div>
 
+  <!-- KO'RISHGAN SANALAR -->
+
+  <div class="dates">
+
+    <div class="date-card" onclick="showDate('first')">
+      <div class="date-icon">🤝</div>
+      <div>
+        <div class="date-title">Birinchi ko‘rishgan kunimiz</div>
+        <div class="date-value">26.04.2026 ❤️</div>
+      </div>
+    </div>
+
+    <div class="date-card" onclick="showDate('second')">
+      <div class="date-icon">💕</div>
+      <div>
+        <div class="date-title">Ikkinchi ko‘rishgan kunimiz</div>
+        <div class="date-value">03.05.2026 ❤️</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="date-message" id="dateMessage"></div>
+
   <button onclick="openGift()">
-    🎁 Sovg'ani ochish
+    🎁 Sovg‘ani ochish
   </button>
 
   <div class="message" id="message">
@@ -213,6 +292,7 @@
 </div>
 
 <script>
+
   const tg = window.Telegram.WebApp;
 
   tg.ready();
@@ -233,20 +313,68 @@
 
     const seconds = Math.floor(difference / 1000);
 
-    const days = Math.floor(seconds / 86400);
+  const days = Math.floor(seconds / 86400);
     const hours = Math.floor((seconds % 86400) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
 
     document.getElementById("time").innerText =
-      `${days} kun ${hours} soat ${minutes} daqiqa ${secs} soniya`;
+      ${days} kun ${hours} soat ${minutes} daqiqa ${secs} soniya;
   }
 
   updateCounter();
   setInterval(updateCounter, 1000);
 
+
+  // SANALARNI OCHISH
+
+  function showDate(type) {
+
+    const box = document.getElementById("dateMessage");
+    if (type === "first") {
+
+      box.innerHTML = 
+        <div style="font-size:32px; margin-bottom:10px;">
+          🤝❤️
+        </div>
+
+        <b>26.04.2026</b>
+
+        <br><br>
+
+        Shu kuni birinchi marta qo‘l berishib
+        ko‘rishganmiz. ❤️
+      ;
+
+    }
+    if (type === "second") {
+
+      box.innerHTML = 
+        <div style="font-size:32px; margin-bottom:10px;">
+          💕
+        </div>
+
+        <b>03.05.2026 ❤️</b>
+      ;
+
+    }
+
+  box.style.display = "block";
+
+    box.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+
+
+  // SOVG'ANI OCHISH
+
   function openGift() {
-    const message = document.getElementById("message");
+
+    const message =
+      document.getElementById("message");
 
     message.style.display = "block";
 
@@ -254,18 +382,24 @@
       createHeart();
     }
 
-    window.scrollTo({
+  window.scrollTo({
       top: document.body.scrollHeight,
       behavior: "smooth"
     });
+
   }
 
+  // YURAKCHALAR
+
   function createHeart() {
-    const heart = document.createElement("div");
+
+    const heart =
+      document.createElement("div");
 
     heart.className = "small-heart";
 
-    const hearts = ["❤️", "💕", "💗", "💖", "💘"];
+    const hearts =
+      ["❤️", "💕", "💗", "💖", "💘"];
 
     heart.innerText =
       hearts[Math.floor(Math.random() * hearts.length)];
@@ -284,9 +418,11 @@
     setTimeout(() => {
       heart.remove();
     }, 6000);
+
   }
 
   setInterval(createHeart, 1200);
+
 </script>
 
 </body>
